@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "name": "my-first-homework",
+  "builds": [{
+    "src": "src/index.ts",
+    "use": "@versel/node"
+  }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dist": "src/index.ts"
+    }
+  ]
+}
