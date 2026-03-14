@@ -42,10 +42,12 @@ videosRouter
       res.status(HttpStatus.BadRequest).send(errorsMessages(errors));
       return;
     }
+    dbVideos.push(req.body);
+    res.status(HttpStatus.NoContent)
   })
   .put("/:id", (req: Request, res: Response) => {
     const id: number = +req.params.id;
-    const VideoId: Video | undefined = dbVideos.find((v) => v.id === id);
+    const VideoId: number = dbVideos.findIndex((v) => v.id === id);
     if (!VideoId) {
       res.status(HttpStatus.NotFound).send("No video ID found");
       return;
@@ -56,6 +58,9 @@ videosRouter
       res.status(HttpStatus.BadRequest).send(errorsMessages(errors));
       return;
     }
+
+    dbVideos[VideoId]=(req.body);
+    res.status(HttpStatus.Ok);
   })
   .delete("/:id", (req: Request, res: Response) => {
     const id: number = +req.params.id;
