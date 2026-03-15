@@ -22,9 +22,6 @@ export type CreateVideoInputModel = {
   title: string;
   author: string;
   availableResolutions: Resolutions[];
-  canBeDownLoad: boolean | false;
-  minAgeRestriction: number;
-  publicationDate: string;
 };
 
 export type UpdateVideoInputModel = {

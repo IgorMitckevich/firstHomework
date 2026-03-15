@@ -8,12 +8,12 @@ export const dbVideos: Video[] = [
     canBeDownLoad: true,
     minAgeRestriction: 15,
     createdAt: new Date().toISOString(),
-    publicationDate: String(new Date()), // need rework
+    publicationDate: new Date().toISOString(), // need rework
     availableResolutions: [
       Resolutions.P144,
       Resolutions.P240,
       Resolutions.P360,
-    ],
+    ]
   },
   {
     id: 2,
@@ -32,6 +32,6 @@ export const dbVideos: Video[] = [
       Resolutions.P1080,
       Resolutions.P1440,
       Resolutions.P2160,
-    ],
+    ]
   },
 ];

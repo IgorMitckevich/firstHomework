@@ -10,12 +10,12 @@ exports.dbVideos = [
         canBeDownLoad: true,
         minAgeRestriction: 15,
         createdAt: new Date().toISOString(),
-        publicationDate: String(new Date()), // need rework
+        publicationDate: new Date().toISOString(), // need rework
         availableResolutions: [
             TypesVideo_1.Resolutions.P144,
             TypesVideo_1.Resolutions.P240,
             TypesVideo_1.Resolutions.P360,
-        ],
+        ]
     },
     {
         id: 2,
@@ -34,6 +34,6 @@ exports.dbVideos = [
             TypesVideo_1.Resolutions.P1080,
             TypesVideo_1.Resolutions.P1440,
             TypesVideo_1.Resolutions.P2160,
-        ],
+        ]
     },
 ];
