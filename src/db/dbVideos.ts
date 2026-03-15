@@ -1,6 +1,6 @@
 import { Resolutions, Video } from "../core/types/TypesVideo";
 
-export const dbVideos: Video[] = [
+export let dbVideos: Video[] = [
   {
     id: 1,
     title: "cats-meme",

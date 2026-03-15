@@ -24,12 +24,17 @@ exports.videosRouter
     res.status(http_statuses_1.HttpStatus.Ok).send(VideoId);
 })
     .post("/", (req, res) => {
-    var _a, _b, _c;
+    var _a, _b;
     const errors = (0, validationValues_1.validationPost)(req.body);
     if (errors.length > 0) {
         res.status(http_statuses_1.HttpStatus.BadRequest).send((0, ErrorMessages_1.errorsMessages)(errors));
         return;
     }
+    const defaultPublicationDate = () => {
+        const date = new Date();
+        date.setDate(date.getDate() + 1);
+        return date.toISOString();
+    };
     const createNewVideo = {
         id: dbVideos_1.dbVideos.length ? dbVideos_1.dbVideos[dbVideos_1.dbVideos.length - 1].id + 1 : 1,
         title: req.body.title,
@@ -37,11 +42,7 @@ exports.videosRouter
         createdAt: new Date().toISOString(),
         canBeDownLoad: (_a = req.body.canBeDownLoad) !== null && _a !== void 0 ? _a : false,
         minAgeRestriction: (_b = req.body.minAgeRestriction) !== null && _b !== void 0 ? _b : null,
-        publicationDate: (_c = new Date().toISOString()) !== null && _c !== void 0 ? _c : (() => {
-            const date = new Date();
-            date.setDate(date.getDate() + 1);
-            return date.toISOString();
-        }),
+        publicationDate: new Date().toISOString() || defaultPublicationDate(),
         availableResolutions: req.body.availableResolutions
     };
     if (!createNewVideo) {
@@ -53,7 +54,7 @@ exports.videosRouter
 })
     .put("/:id", (req, res) => {
     var _a, _b;
-    const id = +req.params.id;
+    const id = Number(req.params.id);
     if (isNaN(id)) {
         res.status(http_statuses_1.HttpStatus.NotFound).send("No video ID found");
         return;
@@ -73,7 +74,7 @@ exports.videosRouter
         date.setDate(date.getDate() + 1);
         return date.toISOString();
     };
-    const newValueVideo = Object.assign(Object.assign({}, VideoId), { title: req.body.title, author: req.body.author, canBeDownLoad: (_a = req.body.canBeDownLoad) !== null && _a !== void 0 ? _a : VideoId.canBeDownLoad, minAgeRestriction: (_b = req.body.minAgeRestriction) !== null && _b !== void 0 ? _b : null, publicationDate: new Date().toISOString() || defaultPublicationDate(), availableResolutions: req.body.availableResolutions });
+    const newValueVideo = Object.assign(Object.assign({}, VideoId), { title: req.body.title, author: req.body.author, canBeDownLoad: (_a = req.body.canBeDownLoad) !== null && _a !== void 0 ? _a : VideoId.canBeDownLoad, minAgeRestriction: (_b = req.body.minAgeRestriction) !== null && _b !== void 0 ? _b : null, publicationDate: req.body.publicationDate || defaultPublicationDate(), availableResolutions: req.body.availableResolutions });
     const VideoIndex = dbVideos_1.dbVideos.findIndex((v) => v.id === id);
     dbVideos_1.dbVideos[VideoIndex] = newValueVideo;
     res.status(http_statuses_1.HttpStatus.NoContent);
@@ -81,7 +82,7 @@ exports.videosRouter
     .delete("/:id", (req, res) => {
     const id = +req.params.id;
     const VideoIndex = dbVideos_1.dbVideos.findIndex((v) => v.id === id);
-    if (!VideoIndex) {
+    if (VideoIndex === -1) {
         res.status(http_statuses_1.HttpStatus.NotFound).send("No video ID found");
         return;
     }

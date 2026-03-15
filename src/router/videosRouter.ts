@@ -30,12 +30,17 @@ videosRouter
     res.status(HttpStatus.Ok).send(VideoId);
   })
   .post("/", (req: Request, res: Response) => {
+
     const errors: FieldError[] = validationPost(req.body);
     if (errors.length > 0) {
       res.status(HttpStatus.BadRequest).send(errorsMessages(errors));
       return;
     }
-
+    const defaultPublicationDate=():string=> {
+      const date = new Date();
+      date.setDate(date.getDate() + 1);
+      return date.toISOString()
+    }
     const createNewVideo: Video = {
       id:dbVideos.length ? dbVideos[dbVideos.length-1].id+1:1,
       title: req.body.title,
@@ -43,11 +48,7 @@ videosRouter
       createdAt: new Date().toISOString(),
       canBeDownLoad: req.body.canBeDownLoad?? false,
       minAgeRestriction: req.body.minAgeRestriction??null,
-      publicationDate: new Date().toISOString() ?? (():string=> {
-        const date = new Date();
-        date.setDate(date.getDate() + 1);
-        return date.toISOString()
-      }),
+      publicationDate: new Date().toISOString() || defaultPublicationDate(),
       availableResolutions:req.body.availableResolutions
     }
     if (!createNewVideo) {
@@ -57,10 +58,10 @@ videosRouter
 
 
     dbVideos.push(createNewVideo);
-    res.status(HttpStatus.Created)
+    res.sendStatus(HttpStatus.Created)
   })
   .put("/:id", (req: Request, res: Response) => {
-    const id: number = +req.params.id;
+    const id: number = Number(req.params.id);
     if(isNaN(id)) {
       res.status(HttpStatus.NotFound).send("No video ID found");
       return;
@@ -86,22 +87,22 @@ videosRouter
       author: req.body.author,
      canBeDownLoad: req.body.canBeDownLoad?? VideoId.canBeDownLoad,
       minAgeRestriction: req.body.minAgeRestriction??null,
-      publicationDate: new Date().toISOString() ||defaultPublicationDate(),
+      publicationDate: req.body.publicationDate ||defaultPublicationDate(),
      availableResolutions:req.body.availableResolutions
     }
     const VideoIndex: number = dbVideos.findIndex((v) => v.id === id);
     dbVideos[VideoIndex]=newValueVideo;
 
 
-    res.status(HttpStatus.NoContent);
+    res.sendStatus(HttpStatus.NoContent);
   })
   .delete("/:id", (req: Request, res: Response) => {
     const id: number = +req.params.id;
     const VideoIndex: number = dbVideos.findIndex((v) => v.id === id);
-    if (!VideoIndex) {
+    if (VideoIndex===-1) {
       res.status(HttpStatus.NotFound).send("No video ID found");
       return;
     }
     dbVideos.splice(VideoIndex, 1);
-    res.status(HttpStatus.NoContent);
+    res.sendStatus(HttpStatus.NoContent);
   });
