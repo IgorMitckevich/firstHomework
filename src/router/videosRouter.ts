@@ -6,7 +6,6 @@ import {
   Resolutions, UpdateVideoInputModel,
   Video,
 } from "../core/types/TypesVideo";
-import { errorsMessages } from "../core/ErrorMessages";
 import {
   validationPut,
   validationPost,
@@ -31,9 +30,9 @@ videosRouter
   })
   .post("/", (req: Request, res: Response) => {
 
-    const errors: FieldError[] = validationPost(req.body);
-    if (errors.length > 0) {
-      res.status(HttpStatus.BadRequest).send(errorsMessages(errors));
+    const errors: APIErrorResult= validationPost(req.body);
+    if (errors.errorsMessages.length > 0) {
+      res.status(HttpStatus.BadRequest).send(errors);
       return;
     }
     const defaultPublicationDate=():string=> {
@@ -71,9 +70,10 @@ videosRouter
       res.status(HttpStatus.BadRequest);
       return;
     }
-        const errors: FieldError[] = validationPut(req.body);
-    if (errors.length > 0) {
-      res.status(HttpStatus.BadRequest).send(errorsMessages(errors));
+
+        const errors: APIErrorResult = validationPut(req.body);
+    if (errors.errorsMessages.length > 0) {
+      res.status(HttpStatus.BadRequest).send(errors);
       return;
     }
     const defaultPublicationDate=():string=> {

@@ -8,7 +8,7 @@ export let dbVideos: Video[] = [
     canBeDownLoad: true,
     minAgeRestriction: 15,
     createdAt: new Date().toISOString(),
-    publicationDate: new Date().toISOString(), // need rework
+    publicationDate: new Date().toISOString(),
     availableResolutions: [
       Resolutions.P144,
       Resolutions.P240,
@@ -22,7 +22,7 @@ export let dbVideos: Video[] = [
     canBeDownLoad: false,
     minAgeRestriction: 17,
     createdAt: new Date().toISOString(),
-    publicationDate: String(new Date()), // need rework
+    publicationDate: new Date().toISOString(),
     availableResolutions: [
       Resolutions.P144,
       Resolutions.P240,

@@ -11,5 +11,5 @@ exports.testsRouter = express_1.default.Router();
 exports.testsRouter
     .delete("/", (req, res) => {
     dbVideos_1.dbVideos.length = 0;
-    res.status(http_statuses_1.HttpStatus.NoContent);
+    res.sendStatus(http_statuses_1.HttpStatus.NoContent);
 });

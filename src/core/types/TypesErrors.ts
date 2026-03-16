@@ -1,7 +1,7 @@
 export type FieldError = {
-  message: string;
-  field: string;
+  message: string|null;
+  field: string|null;
 };
 export type APIErrorResult = {
-  errorsMessages: FieldError[] | null;
+  errorsMessages: [FieldError| null];
 };

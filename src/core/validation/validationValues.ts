@@ -1,9 +1,8 @@
-import {CreateVideoInputModel, UpdateVideoInputModel, Video} from "../types/TypesVideo";
+import {CreateVideoInputModel, UpdateVideoInputModel} from "../types/TypesVideo";
 import { APIErrorResult, FieldError } from "../types/TypesErrors";
-import { HttpStatus } from "../types/http-statuses";
-import { errorsMessages } from "../ErrorMessages";
 
-export const validationPut = (video: UpdateVideoInputModel): FieldError[] => {
+
+export const validationPut = (video: UpdateVideoInputModel): APIErrorResult => {
   const errors: FieldError[] = [];
   if (
     !video.title
@@ -28,10 +27,10 @@ export const validationPut = (video: UpdateVideoInputModel): FieldError[] => {
     }
   }
 
-  return errors;
+  return {errorsMessages:[errors[errors.length-1]]};
 };
 
-export const validationPost = (video: CreateVideoInputModel): FieldError[] => {
+export const validationPost = (video: CreateVideoInputModel): APIErrorResult => {
   const errors: FieldError[] = [];
 
   if (
@@ -55,5 +54,5 @@ export const validationPost = (video: CreateVideoInputModel): FieldError[] => {
       message: "At least one resolution should be added",
     });
   }
-  return errors;
+  return {errorsMessages:[errors[errors.length-1]]};
 };

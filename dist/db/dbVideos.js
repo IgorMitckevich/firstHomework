@@ -10,7 +10,7 @@ exports.dbVideos = [
         canBeDownLoad: true,
         minAgeRestriction: 15,
         createdAt: new Date().toISOString(),
-        publicationDate: new Date().toISOString(), // need rework
+        publicationDate: new Date().toISOString(),
         availableResolutions: [
             TypesVideo_1.Resolutions.P144,
             TypesVideo_1.Resolutions.P240,
@@ -24,7 +24,7 @@ exports.dbVideos = [
         canBeDownLoad: false,
         minAgeRestriction: 17,
         createdAt: new Date().toISOString(),
-        publicationDate: String(new Date()), // need rework
+        publicationDate: new Date().toISOString(),
         availableResolutions: [
             TypesVideo_1.Resolutions.P144,
             TypesVideo_1.Resolutions.P240,

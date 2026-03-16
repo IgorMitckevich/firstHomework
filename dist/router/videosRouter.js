@@ -7,7 +7,6 @@ exports.videosRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const http_statuses_1 = require("../core/types/http-statuses");
 const dbVideos_1 = require("../db/dbVideos");
-const ErrorMessages_1 = require("../core/ErrorMessages");
 const validationValues_1 = require("../core/validation/validationValues");
 exports.videosRouter = express_1.default.Router();
 exports.videosRouter
@@ -26,8 +25,8 @@ exports.videosRouter
     .post("/", (req, res) => {
     var _a, _b;
     const errors = (0, validationValues_1.validationPost)(req.body);
-    if (errors.length > 0) {
-        res.status(http_statuses_1.HttpStatus.BadRequest).send((0, ErrorMessages_1.errorsMessages)(errors));
+    if (errors.errorsMessages.length > 0) {
+        res.status(http_statuses_1.HttpStatus.BadRequest).send(errors);
         return;
     }
     const defaultPublicationDate = () => {
@@ -50,7 +49,7 @@ exports.videosRouter
         return;
     }
     dbVideos_1.dbVideos.push(createNewVideo);
-    res.status(http_statuses_1.HttpStatus.Created);
+    res.sendStatus(http_statuses_1.HttpStatus.Created);
 })
     .put("/:id", (req, res) => {
     var _a, _b;
@@ -65,8 +64,8 @@ exports.videosRouter
         return;
     }
     const errors = (0, validationValues_1.validationPut)(req.body);
-    if (errors.length > 0) {
-        res.status(http_statuses_1.HttpStatus.BadRequest).send((0, ErrorMessages_1.errorsMessages)(errors));
+    if (errors.errorsMessages.length > 0) {
+        res.status(http_statuses_1.HttpStatus.BadRequest).send(errors);
         return;
     }
     const defaultPublicationDate = () => {
@@ -77,7 +76,7 @@ exports.videosRouter
     const newValueVideo = Object.assign(Object.assign({}, VideoId), { title: req.body.title, author: req.body.author, canBeDownLoad: (_a = req.body.canBeDownLoad) !== null && _a !== void 0 ? _a : VideoId.canBeDownLoad, minAgeRestriction: (_b = req.body.minAgeRestriction) !== null && _b !== void 0 ? _b : null, publicationDate: req.body.publicationDate || defaultPublicationDate(), availableResolutions: req.body.availableResolutions });
     const VideoIndex = dbVideos_1.dbVideos.findIndex((v) => v.id === id);
     dbVideos_1.dbVideos[VideoIndex] = newValueVideo;
-    res.status(http_statuses_1.HttpStatus.NoContent);
+    res.sendStatus(http_statuses_1.HttpStatus.NoContent);
 })
     .delete("/:id", (req, res) => {
     const id = +req.params.id;
@@ -87,5 +86,5 @@ exports.videosRouter
         return;
     }
     dbVideos_1.dbVideos.splice(VideoIndex, 1);
-    res.status(http_statuses_1.HttpStatus.NoContent);
+    res.sendStatus(http_statuses_1.HttpStatus.NoContent);
 });

@@ -21,7 +21,7 @@ const validationPut = (video) => {
             errors.push({ field: "age", message: "incorrect age" });
         }
     }
-    return errors;
+    return { errorsMessages: [errors[errors.length - 1]] };
 };
 exports.validationPut = validationPut;
 const validationPost = (video) => {
@@ -44,6 +44,6 @@ const validationPost = (video) => {
             message: "At least one resolution should be added",
         });
     }
-    return errors;
+    return { errorsMessages: [errors[errors.length - 1]] };
 };
 exports.validationPost = validationPost;
