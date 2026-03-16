@@ -9,7 +9,7 @@ const videosRouter_1 = require("./router/videosRouter");
 const testRouter_1 = require("./router/testRouter");
 const setupApp = (app) => {
     app.use(express_1.default.json());
-    app.use("/videos", videosRouter_1.videosRouter);
+    app.use("/api/videos", videosRouter_1.videosRouter);
     app.use("/testing/all-data", testRouter_1.testsRouter);
     return app;
 };
