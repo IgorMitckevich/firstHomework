@@ -7,7 +7,7 @@ export const setupApp = (app: Express) => {
   app.use(express.json());
 
 
-  app.use("/api/videos", videosRouter);
+  app.use("/videos", videosRouter);
   app.use("/testing/all-data", testsRouter);
   return app;
 };
