@@ -27,7 +27,7 @@ export const validationPut = (video: UpdateVideoInputModel): APIErrorResult => {
     }
   }
 
-  return {errorsMessages:[errors[errors.length-1]]};
+  return {errorsMessages:errors};
 };
 
 export const validationPost = (video: CreateVideoInputModel): APIErrorResult => {
@@ -54,5 +54,5 @@ export const validationPost = (video: CreateVideoInputModel): APIErrorResult => 
       message: "At least one resolution should be added",
     });
   }
-  return {errorsMessages:[errors[errors.length-1]]};
+  return {errorsMessages:errors};
 };

@@ -57,7 +57,7 @@ videosRouter
 
 
     dbVideos.push(createNewVideo);
-    res.sendStatus(HttpStatus.Created)
+    res.status(HttpStatus.Created).send(createNewVideo)
   })
   .put("/:id", (req: Request, res: Response) => {
     const id: number = Number(req.params.id);
