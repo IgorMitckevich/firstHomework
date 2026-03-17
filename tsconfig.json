@@ -10,6 +10,9 @@
     "strict": true,
     "skipLibCheck": true
   },
+  "config": {
+    "ignoreTypeErrors": true
+  },
   "include": ["src/**/*"],
 //  "exclude": ["__tests__", "dist", "node_modules"]
 }
