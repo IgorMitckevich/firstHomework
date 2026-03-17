@@ -1,16 +1,12 @@
 import express, { Request, Response, Router } from "express";
 import { HttpStatus } from "../core/types/http-statuses";
 import { dbVideos } from "../db/dbVideos";
-import {
-  CreateVideoInputModel,
-  Resolutions, UpdateVideoInputModel,
-  Video,
-} from "../core/types/TypesVideo";
+import {  Video} from "../core/types/TypesVideo";
 import {
   validationPut,
   validationPost,
 } from "../core/validation/validationValues";
-import { APIErrorResult, FieldError } from "../core/types/TypesErrors";
+import {APIErrorResult} from "../core/types/TypesErrors";
 
 export const videosRouter: Router = express.Router();
 
@@ -45,9 +41,9 @@ videosRouter
       title: req.body.title,
       author: req.body.author,
       createdAt: new Date().toISOString(),
-      canBeDownLoad: req.body.canBeDownLoad?? false,
-      minAgeRestriction: req.body.minAgeRestriction??null,
-      publicationDate: new Date().toISOString() || defaultPublicationDate(),
+      canBeDownLoad: false,
+      minAgeRestriction: null,
+      publicationDate:  defaultPublicationDate(),
       availableResolutions:req.body.availableResolutions
     }
     if (!createNewVideo) {
@@ -67,7 +63,7 @@ videosRouter
     }
     const VideoId: Video|undefined = dbVideos.find((v) => v.id === id);
     if (!VideoId) {
-      res.status(HttpStatus.BadRequest);
+      res.status(HttpStatus.NotFound);
       return;
     }
 
@@ -90,11 +86,11 @@ videosRouter
       publicationDate: req.body.publicationDate ||defaultPublicationDate(),
      availableResolutions:req.body.availableResolutions
     }
-    const VideoIndex: number = dbVideos.findIndex((v) => v.id === id);
-    dbVideos[VideoIndex]=newValueVideo;
+
+    dbVideos[newValueVideo.id]=newValueVideo;
 
 
-    res.sendStatus(HttpStatus.NoContent);
+    res.status(HttpStatus.NoContent);
   })
   .delete("/:id", (req: Request, res: Response) => {
     const id: number = +req.params.id;
