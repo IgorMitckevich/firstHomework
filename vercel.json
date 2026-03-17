@@ -3,7 +3,7 @@
   "name": "my-first-homework",
   "builds": [{
     "src": "src/index.ts",
-    "use": "@versel/node"
+    "use": "@verсel/node"
   }
   ],
   "routes": [
