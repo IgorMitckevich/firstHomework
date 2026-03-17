@@ -8,5 +8,5 @@ export const testsRouter: Router = express.Router();
 testsRouter
     .delete("/", (req: Request, res: Response) => {
         dbVideos.length = 0;
-        res.sendStatus(HttpStatus.NoContent);
+        res.status(HttpStatus.NoContent).send("all videos deleted");
     });
