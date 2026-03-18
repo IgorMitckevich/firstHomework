@@ -15,7 +15,7 @@ videosRouter
     res.status(HttpStatus.Ok).send(dbVideos);
   })
   .get("/:id", (req: Request, res: Response) => {
-    const id: number = +req.params.id;
+    const id: number = Number(req.params.id);
     const VideoId: Video | undefined = dbVideos.find((v) => v.id === id);
     if (!VideoId) {
       res.status(HttpStatus.NotFound).send("No video ID found");
@@ -25,9 +25,6 @@ videosRouter
     res.status(HttpStatus.Ok).send(VideoId);
   })
   .post("/", (req: Request, res: Response) => {
-
-
-
 
     const errors: APIErrorResult= validationPost(req.body);
     if (errors.errorsMessages.length > 0) {
@@ -51,10 +48,6 @@ videosRouter
       publicationDate:  defaultPublicationDate(),
       availableResolutions:req.body.availableResolutions
     }
-    if (!createNewVideo) {
-      res.status(HttpStatus.BadRequest);
-      return;
-    }
 
 
     dbVideos.push(createNewVideo);
@@ -66,8 +59,8 @@ videosRouter
       res.status(HttpStatus.NotFound).send("No video ID found");
       return;
     }
-    const VideoId: Video|undefined = dbVideos.find((v) => v.id === id);
-    if (!VideoId) {
+    const VideoIndex: number = dbVideos.findIndex((v) => v.id === id);
+    if (VideoIndex=== -1) {
       res.status(HttpStatus.NotFound);
       return;
     }
@@ -82,8 +75,8 @@ videosRouter
     //   date.setDate(date.getDate() + 1);
     //   return date.toISOString()
     // }
-    const newValueVideo:Video={
-      ...VideoId,
+    dbVideos[VideoIndex]={
+      ...dbVideos[VideoIndex],
       title: req.body.title,
       author: req.body.author,
      canBeDownLoad: req.body.canBeDownLoad,
@@ -91,8 +84,6 @@ videosRouter
       publicationDate: req.body.publicationDate,
      availableResolutions:req.body.availableResolutions
     }
-
-    dbVideos[newValueVideo.id]=newValueVideo;
 
 
     res.status(HttpStatus.NoContent);

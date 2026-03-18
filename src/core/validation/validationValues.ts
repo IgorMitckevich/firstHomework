@@ -56,7 +56,7 @@ export const validationPut = (video: UpdateVideoInputModel): APIErrorResult => {
   export const validationPost = (video: CreateVideoInputModel): APIErrorResult => {
     const errors: FieldError[] = [];
 
-    if (!video.title || video.title.trim() === '') {
+    if (!video.title || video.title.trim() === '' || video.title.length ===null) {
       errors.push({field: "title", message: "Invalid title"});
     } else if (video.title.length > 40) {
       errors.push({field: "title", message: "Title should not exceed 40 characters"});
