@@ -5,10 +5,14 @@ import { setupApp } from "./setup-app";
 export const app = express();
 setupApp(app);
 
+export default app;
 // порт приложения
-const PORT = process.env.PORT || 5001;
+if(require.main === module) {
+  const PORT = process.env.PORT || 5001;
 
 // запуск приложения
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(`Example app listening on port ${PORT}`);
+  });
+}
+
