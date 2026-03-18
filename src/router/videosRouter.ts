@@ -49,9 +49,8 @@ videosRouter
       availableResolutions:req.body.availableResolutions
     }
 
-
     dbVideos.push(createNewVideo);
-    res.status(HttpStatus.Created).send(createNewVideo)
+    res.status(HttpStatus.Created).send(dbVideos[dbVideos.length-1]);
   })
   .put("/:id", (req: Request, res: Response) => {
     const id: number = Number(req.params.id);
