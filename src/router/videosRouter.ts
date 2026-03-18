@@ -60,7 +60,7 @@ videosRouter
     }
     const VideoIndex: number = dbVideos.findIndex((v) => v.id === id);
     if (VideoIndex=== -1) {
-      res.status(HttpStatus.NotFound);
+      res.sendStatus(HttpStatus.NotFound);
       return;
     }
 
@@ -85,7 +85,7 @@ videosRouter
     }
 
 
-    res.status(HttpStatus.NoContent);
+    res.sendStatus(HttpStatus.NoContent);
   })
   .delete("/:id", (req: Request, res: Response) => {
     const id: number = +req.params.id;
