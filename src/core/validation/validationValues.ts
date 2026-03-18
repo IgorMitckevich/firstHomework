@@ -21,7 +21,7 @@ export const validationPut = (video: UpdateVideoInputModel): APIErrorResult => {
         video.minAgeRestriction > 18 ||
         video.minAgeRestriction < 1 || video.minAgeRestriction === undefined
     ) {
-      errors.push({field: "age", message: "incorrect age"})
+      errors.push({field: "minAgeRestriction", message: "incorrect age"})
     }
   }
   if (typeof video.canBeDownloaded !== 'boolean') {
