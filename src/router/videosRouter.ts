@@ -78,7 +78,7 @@ videosRouter
       ...dbVideos[VideoIndex],
       title: req.body.title,
       author: req.body.author,
-     canBeDownloaded: req.body.canBeDownLoad,
+     canBeDownloaded: req.body.canBeDownloaded,
       minAgeRestriction: req.body.minAgeRestriction??null,
       publicationDate: req.body.publicationDate,
      availableResolutions:req.body.availableResolutions
