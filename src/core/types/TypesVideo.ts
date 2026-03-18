@@ -12,7 +12,7 @@ export type Video = {
   id: number;
   title: string;
   author: string;
-  canBeDownLoad: boolean;
+  canBeDownloaded: boolean;
   minAgeRestriction: number | null;
   createdAt: string;
   publicationDate: string;
@@ -28,7 +28,7 @@ export type UpdateVideoInputModel = {
   title: string;
   author: string;
   availableResolutions: Resolutions[];
-  canBeDownLoad: boolean;
+  canBeDownloaded: boolean;
   minAgeRestriction: number;
   publicationDate: string;
 };

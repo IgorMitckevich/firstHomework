@@ -43,7 +43,7 @@ videosRouter
       title: req.body.title,
       author: req.body.author,
       createdAt: new Date().toISOString(),
-      canBeDownLoad: false,
+      canBeDownloaded: false,
       minAgeRestriction: null,
       publicationDate:  defaultPublicationDate(),
       availableResolutions:req.body.availableResolutions
@@ -78,7 +78,7 @@ videosRouter
       ...dbVideos[VideoIndex],
       title: req.body.title,
       author: req.body.author,
-     canBeDownLoad: req.body.canBeDownLoad,
+     canBeDownloaded: req.body.canBeDownLoad,
       minAgeRestriction: req.body.minAgeRestriction??null,
       publicationDate: req.body.publicationDate,
      availableResolutions:req.body.availableResolutions

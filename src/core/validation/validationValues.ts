@@ -24,7 +24,7 @@ export const validationPut = (video: UpdateVideoInputModel): APIErrorResult => {
       errors.push({field: "age", message: "incorrect age"})
     }
   }
-  if (!video.canBeDownLoad) {
+  if (!video.canBeDownloaded) {
     errors.push({field: "canBeDownLoad", message: "undefined"});
   }
   if (!video.publicationDate) {
