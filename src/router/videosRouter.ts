@@ -1,7 +1,7 @@
 import express, { Request, Response, Router } from "express";
 import { HttpStatus } from "../core/types/http-statuses";
 import { dbVideos } from "../db/dbVideos";
-import {  Video} from "../core/types/TypesVideo";
+import {CreateVideoInputModel, Video} from "../core/types/TypesVideo";
 import {
   validationPut,
   validationPost,
@@ -26,6 +26,9 @@ videosRouter
   })
   .post("/", (req: Request, res: Response) => {
 
+
+
+
     const errors: APIErrorResult= validationPost(req.body);
     if (errors.errorsMessages.length > 0) {
       res.status(HttpStatus.BadRequest).send(errors);
@@ -36,6 +39,8 @@ videosRouter
       date.setDate(date.getDate() + 1);
       return date.toISOString()
     }
+
+
     const createNewVideo: Video = {
       id:dbVideos.length ? dbVideos[dbVideos.length-1].id+1:1,
       title: req.body.title,
@@ -72,18 +77,18 @@ videosRouter
       res.status(HttpStatus.BadRequest).send(errors);
       return;
     }
-    const defaultPublicationDate=():string=> {
-      const date = new Date();
-      date.setDate(date.getDate() + 1);
-      return date.toISOString()
-    }
+    // const defaultPublicationDate=():string=> {
+    //   const date = new Date();
+    //   date.setDate(date.getDate() + 1);
+    //   return date.toISOString()
+    // }
     const newValueVideo:Video={
       ...VideoId,
       title: req.body.title,
       author: req.body.author,
-     canBeDownLoad: req.body.canBeDownLoad?? VideoId.canBeDownLoad,
+     canBeDownLoad: req.body.canBeDownLoad,
       minAgeRestriction: req.body.minAgeRestriction??null,
-      publicationDate: req.body.publicationDate ||defaultPublicationDate(),
+      publicationDate: req.body.publicationDate,
      availableResolutions:req.body.availableResolutions
     }
 
