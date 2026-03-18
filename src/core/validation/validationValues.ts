@@ -27,7 +27,7 @@ export const validationPut = (video: UpdateVideoInputModel): APIErrorResult => {
   if (typeof video.canBeDownloaded !== 'boolean') {
     errors.push({field: "canBeDownloaded", message: "canBeDownloaded should be a boolean"});
   }
-  if (!video.publicationDate) {
+  if (typeof video.publicationDate !== 'string') {
     errors.push({field: "publicationDate", message: "incorrect publicationDate"});
   }
 
